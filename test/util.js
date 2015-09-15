@@ -9,30 +9,30 @@ describe('A test for MultiParty.util', function() {
     });
   });
 
-  describe('checkOpts_', function(){
+  describe('checkOpts', function(){
 
     describe('property : key', function(){
       it('should throw when undefined', function(){
         (function(){
-          MultiParty.util.checkOpts_({});
+          MultiParty.util.checkOpts({});
         }).should.throw();
       });
 
       it('should throw when not string', function(){
         (function(){
-          MultiParty.util.checkOpts_({"key": 0});
+          MultiParty.util.checkOpts({"key": 0});
         }).should.throw();
       });
 
       it('should throw when string pattern is wrong', function(){
         (function(){
-          MultiParty.util.checkOpts_({"key": "abc"});
+          MultiParty.util.checkOpts({"key": "abc"});
         }).should.throw();
       });
 
       it('should not throw when correct pattern', function(){
         (function(){
-          MultiParty.util.checkOpts_({"key": APPKEY});
+          MultiParty.util.checkOpts({"key": APPKEY});
         }).should.not.throw();
       });
 
@@ -40,18 +40,18 @@ describe('A test for MultiParty.util', function() {
 
     describe('property : room_name', function(){
       it('should be blank when not indicated', function(){
-        MultiParty.util.checkOpts_({"key": APPKEY})
+        MultiParty.util.checkOpts({"key": APPKEY})
           .should.have.property('room_name', '');
       });
 
       it('should be blank when value is not string', function(){
-        MultiParty.util.checkOpts_({"key": APPKEY, "room": -1})
+        MultiParty.util.checkOpts({"key": APPKEY, "room": -1})
           .should.have.property('room_name', '');
       });
 
       it('should throw when value does not match correct pattern (too short)', function(){
         (function(){
-          MultiParty.util.checkOpts_({"key": APPKEY, "room": "abc"});
+          MultiParty.util.checkOpts({"key": APPKEY, "room": "abc"});
         }).should.throw();
       });
 
@@ -60,18 +60,18 @@ describe('A test for MultiParty.util', function() {
           var r = "";
           for(var i = 0; i < 33; i++) { r += "a"; }
 
-          MultiParty.util.checkOpts_({"key": APPKEY, "room": r});
+          MultiParty.util.checkOpts({"key": APPKEY, "room": r});
         }).should.throw();
       });
 
       it('should throw when value does not match correct pattern (includes non digit or alphabet)', function(){
         (function(){
-          MultiParty.util.checkOpts_({"key": APPKEY, "room": "abc@"});
+          MultiParty.util.checkOpts({"key": APPKEY, "room": "abc@"});
         }).should.throw();
       });
 
       it('should be same as indicated when correct string (length = 4)', function(){
-        MultiParty.util.checkOpts_({"key": APPKEY, "room": "test"})
+        MultiParty.util.checkOpts({"key": APPKEY, "room": "test"})
           .should.have.property('room_name', 'test');
       });
 
@@ -79,23 +79,23 @@ describe('A test for MultiParty.util', function() {
         var r = "";
         for(var i = 0; i < 32; i++) { r += "a"; }
 
-        MultiParty.util.checkOpts_({"key": APPKEY, "room": r})
+        MultiParty.util.checkOpts({"key": APPKEY, "room": r})
           .should.have.property('room_name', r);
       });
     });
 
     describe('property : room_id', function(){
-      it('should be length of 8 and end with "R_"', function(){
-        MultiParty.util.checkOpts_({"key": APPKEY, "room": ""}).should
-          .have.property('room_id').with.lengthOf(8)
+      it('should be length of 10 and end with "R_"', function(){
+        MultiParty.util.checkOpts({"key": APPKEY, "room": ""}).should
+          .have.property('room_id').with.lengthOf(10)
 
-        MultiParty.util.checkOpts_({"key": APPKEY, "room": ""}).should
+        MultiParty.util.checkOpts({"key": APPKEY, "room": ""}).should
           .have.property('room_id').with.match(/R_$/)
       });
 
       it('should be different when different "room" values are indicated', function(){
-        var opt0 = MultiParty.util.checkOpts_({"key": APPKEY, "room": ""})
-        var opt1 = MultiParty.util.checkOpts_({"key": APPKEY, "room": "test"})
+        var opt0 = MultiParty.util.checkOpts({"key": APPKEY, "room": ""})
+        var opt1 = MultiParty.util.checkOpts({"key": APPKEY, "room": "test"})
 
         opt0.room_id.should.not.eql(opt1.room_id);
       });

@@ -13,6 +13,10 @@
     "name": "NTT Communications",
     "email": "skyway@ntt.com"
   },
+  "modifier":{
+    "name":"MKGaru",
+    "email":"dev@igaru.com"
+  },
   "licenses": [
     {
       "type": "MIT",
